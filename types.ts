@@ -5,7 +5,7 @@ export type User = {
   username: string;
   profile_picture?: string;
 };
-//exports
+
 export type Like = {
   user_id: string;
 };
