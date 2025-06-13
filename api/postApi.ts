@@ -1,7 +1,8 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const API_URL = 'https://80a4-131-226-113-60.ngrok-free.app';
+//export const API_URL = 'https://a42d-120-28-189-87.ngrok-free.app';
+export const API_URL = 'https://e587-120-28-189-87.ngrok-free.app/api'; // Uncomment if you want to use this URL
 
 
 export const fetchPosts = async (page = 1) => {

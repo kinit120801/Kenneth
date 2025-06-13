@@ -1,20 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, View, Text, TouchableOpacity, ActivityIndicator, Alert, Modal, Image, TextInput } from 'react-native';
+import {
+  FlatList,
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+  Modal,
+  Image,
+  TextInput,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Feather';
 import PostItem from '../components/PostItem';
 import CommentsModal from '../components/CommentsModal';
 import CreatePostModal from '../components/CreatePostModal';
 import styles from '../styles/styles';
-import { fetchPosts, createPost, likePost, unlikePost, addComment, updateComment } from '../api/postApi';
+import {
+  fetchPosts,
+  createPost,
+  likePost,
+  unlikePost,
+  addComment,
+  updateComment,
+  API_URL,
+} from '../api/postApi';
 import { searchUsers } from '../api/userApi';
 import { User, Post } from '../types';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import type { RootStackParamList } from '../App'; 
-import { API_URL } from '../api/postApi';
-
-//const API_URL = 'https://6da9-131-226-112-101.ngrok-free.app/api';
+import type { RootStackParamList } from '../App';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -32,7 +47,6 @@ const HomeScreen: React.FC = () => {
   const [searchResults, setSearchResults] = useState<User[]>([]);
   const [searching, setSearching] = useState(false);
 
-  
   const fetchUser = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
@@ -51,9 +65,6 @@ const HomeScreen: React.FC = () => {
     }
   };
 
-  
-
-
   const fetchPostsHandler = async (reset = false) => {
     if (!userId) return;
     try {
@@ -62,7 +73,7 @@ const HomeScreen: React.FC = () => {
       const newData: Post[] = Array.isArray(data) ? data : [];
       setPosts((prev) => {
         const combined = reset ? newData : [...prev, ...newData];
-        const uniquePosts = Array.from(new Map(combined.map(post => [post.id, post])).values());
+        const uniquePosts = Array.from(new Map(combined.map((post) => [post.id, post])).values());
         return uniquePosts;
       });
       if (!reset) setPage((prev) => prev + 1);
@@ -123,7 +134,7 @@ const HomeScreen: React.FC = () => {
       return response.data.comment ?? {
         id: commentId,
         content,
-        user: user, 
+        user: user,
       };
     } catch (e) {
       Alert.alert('Error', 'Failed to update comment');
@@ -153,24 +164,23 @@ const HomeScreen: React.FC = () => {
     }
   };
 
-  const handleRefresh = async () => {
-    setRefreshing(true);
-    await fetchPostsHandler(true);
-    setRefreshing(false);
-  };
-
   const handleSearch = async () => {
     if (!searchQuery.trim()) return;
     setSearching(true);
     try {
       const res = await searchUsers(searchQuery);
       setSearchResults(res.data);
-    } catch (e: any) {
-
+    } catch {
       Alert.alert('Error', 'Failed to search users');
     } finally {
       setSearching(false);
     }
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await fetchPostsHandler(true);
+    setRefreshing(false);
   };
 
   useEffect(() => {
@@ -186,14 +196,13 @@ const HomeScreen: React.FC = () => {
 
   useEffect(() => {
     let isActive = true;
-
     if (searchQuery.trim() !== '') {
       (async () => {
         setSearching(true);
         try {
           const res = await searchUsers(searchQuery);
           if (isActive) setSearchResults(res.data);
-        } catch (e) {
+        } catch {
           if (isActive) setSearchResults([]);
         } finally {
           if (isActive) setSearching(false);
@@ -202,109 +211,71 @@ const HomeScreen: React.FC = () => {
     } else {
       setSearchResults([]);
     }
-
     return () => {
       isActive = false;
     };
   }, [searchQuery]);
 
   return (
-    <View style={{ flex: 1, padding: 10 }}>
+    <View style={{ flex: 1, justifyContent: 'center', padding: 20, alignItems: 'center', backgroundColor: '#2d014d' }}>
+
       {userId ? (
         <>
-
           <View style={{ flexDirection: 'row', marginBottom: 12 }}>
-            <TextInput
-              style={[styles.mindInput, { flex: 1 }]}
-              placeholder="Search"
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-              returnKeyType="search"
-            />
-          </View>
+  <TextInput
+    style={{
+      flex: 1,
+      backgroundColor: '#fff',
+      borderRadius: 25,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      fontSize: 16,
+    }}
+    placeholder="Search"
+    value={searchQuery}
+    onChangeText={setSearchQuery}
+    returnKeyType="search"
+  />
+</View>
 
 
           <View style={styles.headerRow}>
-            <TouchableOpacity
-              onPress={() => { navigation.navigate('ProfileScreen'); }}
-              activeOpacity={0.7}
-            >
+            <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')} activeOpacity={0.7}>
               <Image
                 source={
                   user?.profile_picture
-                    ? {
-                        uri: user.profile_picture.startsWith('http')
-                          ? user.profile_picture
-                          : `${API_URL.replace('/api', '')}${user.profile_picture}`,
-                      }
+                    ? { uri: user.profile_picture.startsWith('http') ? user.profile_picture : `${API_URL.replace('/api', '')}${user.profile_picture}` }
                     : require('../assets/avatar.jpg')
                 }
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 20,
-                  marginRight: 10,
-                  backgroundColor: '#eee',
-                }}
+                style={{ width: 40, height: 40, borderRadius: 20, marginRight: 10, backgroundColor: '#eee' }}
               />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.mindInput, { flex: 1 }]}
-              onPress={() => setShowPostModal(true)}
-              activeOpacity={0.7}
-            >
-              <Text style={{ color: '#888' }}>
-                What's on your mind?
-              </Text>
+            <TouchableOpacity style={[styles.mindInput, { flex: 1 }]} onPress={() => setShowPostModal(true)} activeOpacity={0.7}>
+              <Text>What's on your mind?</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setShowMenu(true)} style={styles.burgerBtn}>
-              <Icon name="menu" size={28} color="#444" />
+              <Icon name="menu" size={28} />
             </TouchableOpacity>
           </View>
 
-
-          <Modal
-            visible={showMenu}
-            transparent
-            animationType="fade"
-            onRequestClose={() => setShowMenu(false)}
-          >
+          <Modal visible={showMenu} transparent animationType="fade" onRequestClose={() => setShowMenu(false)}>
             <TouchableOpacity style={styles.menuOverlay} onPress={() => setShowMenu(false)}>
               <View style={styles.menuModal}>
-                <TouchableOpacity
-                  onPress={() => {
-                    setShowMenu(false);
-                    navigation.navigate('ProfileScreen');
-                  }}
-                  style={styles.menuItem}
-                >
-                  <Icon name="user" size={20} color="#1976d2" />
-                  <Text style={{ color: '#1976d2', marginLeft: 8 }}>Profile</Text>
+                <TouchableOpacity onPress={() => { setShowMenu(false); navigation.navigate('ProfileScreen'); }} style={styles.menuItem}>
+                  <Icon name="user" size={20} />
+                  <Text style={{ marginLeft: 8 }}>Profile</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setShowMenu(false);
-                    navigation.navigate('PersonalDetailsScreen');
-                  }}
-                  style={styles.menuItem}
-                >
-                  <Icon name="info" size={20} color="#1976d2" />
-                  <Text style={{ color: '#1976d2', marginLeft: 8 }}>Personal Details</Text>
+                <TouchableOpacity onPress={() => { setShowMenu(false); navigation.navigate('PersonalDetailsScreen'); }} style={styles.menuItem}>
+                  <Icon name="info" size={20} />
+                  <Text style={{ marginLeft: 8 }}>Personal Details</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setShowMenu(false);
-                    handleLogout();
-                  }}
-                  style={styles.menuItem}
-                >
-                  <Icon name="log-out" size={20} color="red" />
-                  <Text style={{ color: 'red', marginLeft: 8 }}>Logout</Text>
+                <TouchableOpacity onPress={() => { setShowMenu(false); handleLogout(); }} style={styles.menuItem}>
+                  <Icon name="log-out" size={20} />
+                  <Text style={{ marginLeft: 8 }}>Logout</Text>
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
           </Modal>
-
 
           <CreatePostModal
             visible={showPostModal}
@@ -318,13 +289,11 @@ const HomeScreen: React.FC = () => {
             loading={loading}
           />
 
-
-
           {searchQuery.trim() !== '' && !searching ? (
             searchResults.length > 0 ? (
               <FlatList
                 data={searchResults}
-                keyExtractor={item => item.id.toString()}
+                keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                   <TouchableOpacity
                     style={{
@@ -342,16 +311,12 @@ const HomeScreen: React.FC = () => {
                     }}
                   >
                     <Image
-                      source={
-                        item.profile_picture
-                          ? { uri: item.profile_picture }
-                          : require('../assets/avatar.jpg')
-                      }
+                      source={item.profile_picture ? { uri: item.profile_picture } : require('../assets/avatar.jpg')}
                       style={{ width: 36, height: 36, borderRadius: 18, marginRight: 10 }}
                     />
                     <View>
                       <Text style={{ fontWeight: 'bold' }}>{item.first_name} {item.last_name}</Text>
-                      <Text style={{ color: '#888' }}>@{item.username}</Text>
+                      <Text>@{item.username}</Text>
                     </View>
                   </TouchableOpacity>
                 )}
@@ -359,7 +324,7 @@ const HomeScreen: React.FC = () => {
               />
             ) : (
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ color: '#888', fontSize: 16 }}>No User Found</Text>
+                <Text>No User Found</Text>
               </View>
             )
           ) : (
@@ -386,12 +351,13 @@ const HomeScreen: React.FC = () => {
                 }
               }}
               onEndReachedThreshold={0.2}
-              ListFooterComponent={loading ? <ActivityIndicator size="small" color="#000" style={{ marginTop: 10 }} /> : null}
+              ListFooterComponent={
+                loading ? <ActivityIndicator size="small" style={{ marginTop: 10 }} /> : null
+              }
               refreshing={refreshing}
               onRefresh={handleRefresh}
             />
           )}
-
         </>
       ) : (
         <ActivityIndicator style={{ marginTop: 20 }} />

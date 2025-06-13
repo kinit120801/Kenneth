@@ -1,241 +1,144 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView, TouchableOpacity ,KeyboardAvoidingView ,Platform } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { RouteProp } from '@react-navigation/native';
-import type { RootStackParamList } from '../App'; 
-import Icon from 'react-native-vector-icons/Feather';
-import sharedStyles from '../styles/sharedStyles';
-import { API_URL } from '../api/postApi'
+// screens/PersonalDetailsScreen.tsx
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+  Alert,
+} from 'react-native';
 
-//const API_URL = 'https://6da9-131-226-112-101.ngrok-free.app/api';
-
-type PersonalDetailsScreenProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'PersonalDetailsScreen'>;
-  route: RouteProp<RootStackParamList, 'PersonalDetailsScreen'>;
-};
-
-const PersonalDetailsScreen: React.FC<PersonalDetailsScreenProps> = ({ navigation }) => {
-  const [user, setUser] = useState<any>(null);
+const PersonalDetailsScreen = ({ navigation }: any) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [username, setUsername] = useState('');
-  const [birthdate, setBirthdate] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [editableField, setEditableField] = useState<string | null>(null);
+  const [bio, setBio] = useState('');
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  const fetchUser = async () => {
-    const token = await AsyncStorage.getItem('token');
-    const res = await fetch(`${API_URL}/fetchuser`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await res.json();
-    setUser(data);
-    setFirstName(data.first_name || '');
-    setLastName(data.last_name || '');
-    setUsername(data.username || '');
-    setBirthdate(data.birthdate || '');
-    setEmail(data.email || '');
-  };
-
-  const handleSave = async () => {
-    const token = await AsyncStorage.getItem('token');
-    const body: any = {
-      first_name: firstName,
-      last_name: lastName,
-      username,
-      email,
-      current_password: currentPassword,
-    };
-    if (password) {
-      body.password = password;
-      body.password_confirmation = password;
+  const handleSave = () => {
+    if (!firstName || !lastName || !bio) {
+      Alert.alert('Validation Error', 'Please fill in all fields.');
+      return;
     }
-    try {
-      const res = await fetch(`${API_URL}/user/${user.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(body),
-      });
-      if (res.ok) {
-        Alert.alert('Success', 'Profile updated!');
-        fetchUser();
-        setPassword('');
-        setCurrentPassword('');
-      } else {
-        const err = await res.json();
-        Alert.alert('Error', err.message || 'Failed to update profile');
-      }
-    } catch (e) {
-      Alert.alert('Error', 'Failed to update profile');
-    }
+    // Process or navigate forward
+    Alert.alert('Saved', 'Your details have been saved.');
+    navigation.goBack(); // or navigate somewhere else
   };
 
   return (
-     <KeyboardAvoidingView
-       style={{ flex: 1, backgroundColor: '#fff' }}
-       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 24}
-     >
-       <ScrollView
-         contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 24 }}
-         keyboardShouldPersistTaps="handled"
-       >
+    <View style={styles.container}>
+      {/* Decorative Background */}
+      <View style={[styles.spot, { top: 40, left: 30, backgroundColor: '#7f5af0', opacity: 0.18, width: 100, height: 100 }]} />
+      <View style={[styles.spot, { bottom: 60, right: 40, backgroundColor: '#b983ff', opacity: 0.13, width: 90, height: 90 }]} />
+      <View style={[styles.spot, { top: 180, right: 50, backgroundColor: '#fff', opacity: 0.07, width: 60, height: 60 }]} />
+      <View style={[styles.sparkle, { top: 100, left: 200 }]} />
+      <View style={[styles.sparkle, { top: 250, right: 80 }]} />
+      <View style={[styles.sparkle, { bottom: 120, left: 80 }]} />
 
-      <Text style={styles.label}>First Name</Text>
-      <View style={styles.inputWrapper}>
-        <TextInput
-          style={styles.input}
-          value={firstName}
-          onChangeText={setFirstName}
-          editable={editableField === 'firstName'}
-          placeholder="First Name"
-        />
-        <Icon
-          name="edit-2"
-          size={18}
-          color="#1976d2"
-          style={styles.editIcon}
-          onPress={() => setEditableField('firstName')}
-        />
-      </View>
+      <Text style={styles.title}>Personal Details</Text>
 
-      <Text style={styles.label}>Last Name</Text>
-      <View style={styles.inputWrapper}>
-        <TextInput
-          style={[styles.input, { flex: 1 }]}
-          value={lastName}
-          onChangeText={setLastName}
-          editable={editableField === 'lastName'}
-          placeholder="Last Name"
-        />
-        <Icon
-          name="edit-2"
-          size={18}
-          color="#1976d2"
-          style={styles.editIcon}
-          onPress={() => setEditableField('lastName')}
-        />
-      </View>
-
-      <Text style={styles.label}>Username</Text>
-      <View style={styles.inputWrapper}>
-        <TextInput
-          style={[styles.input, { flex: 1 }]}
-          value={username}
-          onChangeText={setUsername}
-          editable={editableField === 'username'}
-          placeholder="Username"
-        />
-        <Icon
-          name="edit-2"
-          size={18}
-          color="#1976d2"
-          style={styles.editIcon}
-          onPress={() => setEditableField('username')}
-        />
-      </View>
-
-      <Text style={styles.label}>Birthdate</Text>
-      <View style={styles.inputRow}>
-        <TextInput
-          style={[styles.input, { flex: 1, backgroundColor: '#eee' }]}
-          value={birthdate}
-          editable={false}
-          placeholder="Birthdate"
-        />
-      </View>
-
-      <Text style={styles.label}>Email</Text>
-      <View style={styles.inputWrapper}>
-        <TextInput
-          style={[styles.input, { flex: 1 }]}
-          value={email}
-          onChangeText={setEmail}
-          editable={editableField === 'email'}
-          placeholder="Email"
-          keyboardType="email-address"
-        />
-        <Icon
-          name="edit-2"
-          size={18}
-          color="#1976d2"
-          style={styles.editIcon}
-          onPress={() => setEditableField('email')}
-        />
-      </View>
-
-      <Text style={styles.label}>Password</Text>
-      <View style={styles.inputWrapper}>
-        <TextInput
-          style={[styles.input, { flex: 1 }]}
-          value={password}
-          onChangeText={setPassword}
-          editable={editableField === 'password'}
-          placeholder="Change Password"
-          secureTextEntry
-        />
-        <Icon
-          name="edit-2"
-          size={18}
-          color="#1976d2"
-          style={styles.editIcon}
-          onPress={() => setEditableField('password')}
-        />
-      </View>
-
-      <Text style={styles.label}>Current Password (required to save changes)</Text>
       <TextInput
-        style={[styles.input, { marginBottom: 20 }]}
-        value={currentPassword}
-        onChangeText={setCurrentPassword}
-        secureTextEntry
-        placeholder="Current Password"
+        placeholder="First Name"
+        placeholderTextColor="#aaa"
+        value={firstName}
+        onChangeText={setFirstName}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Last Name"
+        placeholderTextColor="#aaa"
+        value={lastName}
+        onChangeText={setLastName}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Bio"
+        placeholderTextColor="#aaa"
+        value={bio}
+        onChangeText={setBio}
+        multiline
+        numberOfLines={3}
+        style={[styles.input, { height: 100, textAlignVertical: 'top' }]}
       />
 
-      <TouchableOpacity style={sharedStyles.button} onPress={handleSave}>
-        <Text style={sharedStyles.buttonText}>Save</Text>
+      <TouchableOpacity style={styles.button} onPress={handleSave}>
+        <Text style={styles.buttonText}>Save</Text>
       </TouchableOpacity>
-        </ScrollView>
-      </KeyboardAvoidingView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
-  label: { fontWeight: 'bold', marginTop: 16 },
-  inputWrapper: {
-    position: 'relative',
-    marginTop: 4,
-    marginBottom: 12,
+  container: {
+    flex: 1,
+    backgroundColor: '#2d014d',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 32,
+    color: '#b983ff',
+    marginBottom: 20,
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    fontFamily: Platform.OS === 'ios' ? 'Snell Roundhand' : 'cursive',
+    textShadowColor: '#7f5af0',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 8,
   },
   input: {
+    width: '100%',
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 6,
-    padding: 10,
-    paddingRight: 36,
+    borderColor: '#7f5af0',
     backgroundColor: '#fff',
+    color: '#000',
+    borderRadius: 10,
+    padding: 14,
+    marginBottom: 12,
+    shadowColor: '#7f5af0',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 5,
   },
-  editIcon: {
-    position: 'absolute',
-    right: 10,
-    top: 14,
-    zIndex: 1,
-  },
-  inputRow: {
-    flexDirection: 'row',
+  button: {
+    backgroundColor: '#7f5af0',
+    paddingVertical: 14,
+    paddingHorizontal: 48,
+    borderRadius: 20,
     alignItems: 'center',
-    marginBottom: 16,
+    marginTop: 10,
+    shadowColor: '#7f5af0',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.4,
+    shadowRadius: 18,
+    elevation: 8,
+  },
+  buttonText: {
+    color: '#16161a',
+    fontWeight: '700',
+    fontSize: 20,
+    letterSpacing: 1,
+  },
+  spot: {
+    position: 'absolute',
+    borderRadius: 100,
+  },
+  sparkle: {
+    position: 'absolute',
+    width: 14,
+    height: 14,
+    backgroundColor: 'transparent',
+    borderColor: '#b983ff',
+    borderWidth: 1.5,
+    borderRadius: 7,
+    opacity: 0.7,
+    shadowColor: '#b983ff',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 6,
+    zIndex: 1,
   },
 });
 

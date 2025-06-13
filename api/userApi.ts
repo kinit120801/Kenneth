@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from './postApi';
 
-//const API_URL = 'https://6da9-131-226-112-101.ngrok-free.app/api';
+
 
 export const followUser = async (followedUserId: number, followerId: number) => {
   const token = await AsyncStorage.getItem('token');

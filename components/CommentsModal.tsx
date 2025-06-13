@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
-import sharedStyles from '../styles/sharedStyles';
 import { Comment, Post } from '../types';
 
 type CommentsModalProps = {
@@ -54,7 +53,18 @@ const CommentsModal: React.FC<CommentsModalProps> = ({ visible, onClose, post, u
           alignItems: 'center',
         }}
       >
-        <View style={sharedStyles.modalCard}>
+        <View style={{
+          backgroundColor: '#fff',
+          borderRadius: 10,
+          padding: 16,
+          width: '90%',
+          maxHeight: '80%',
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 4,
+          elevation: 5,
+        }}>
           <Text style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 14, color: '#222' }}>
             Comments
           </Text>

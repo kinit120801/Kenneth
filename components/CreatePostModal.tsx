@@ -1,5 +1,13 @@
 import React from 'react';
-import { Modal, View, Text, TextInput, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import {
+  Modal,
+  View,
+  Text,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
 import AppButton from './AppButton';
 import sharedStyles from '../styles/sharedStyles';
 
@@ -35,30 +43,67 @@ const CreatePostModal: React.FC<Props> = ({
         alignItems: 'center',
       }}
     >
-      <View style={sharedStyles.modalCard}>
-        <Text style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 12 }}>Create Post</Text>
+      <View
+        style={[
+          sharedStyles.modalCard,
+          {
+            backgroundColor: '#fff',
+            borderRadius: 12,
+            padding: 20,
+            width: '90%',
+          },
+        ]}
+      >
+        <Text style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 12, color: '#5A31F4' }}>
+          Create Post
+        </Text>
         <TextInput
           style={{
             width: '100%',
             minHeight: 80,
-            borderColor: '#ccc',
-            borderWidth: 1,
-            borderRadius: 8,
+            borderColor: '#5A31F4',
+            borderWidth: 1.2,
+            borderRadius: 10,
             padding: 10,
             marginBottom: 16,
             textAlignVertical: 'top',
-            backgroundColor: '#fff',
+            backgroundColor: '#F5F3FF',
+            color: '#2C1A78',
           }}
           placeholder="What's on your mind?"
+          placeholderTextColor="#8E79D8"
           multiline
           value={value}
           onChangeText={onChangeText}
         />
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-          <AppButton title="Post" onPress={onSubmit} disabled={loading} style={{ flex: 1, marginRight: 8 }} />
-          <AppButton title="Cancel" onPress={onClose} disabled={loading} style={{ flex: 1, backgroundColor: '#eee' }} textStyle={{ color: '#1976d2' }} />
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', width: '100%' }}>
+          <AppButton
+            title="Post"
+            onPress={onSubmit}
+            disabled={loading}
+            style={{
+              paddingVertical: 6,
+              paddingHorizontal: 14,
+              backgroundColor: '#2C1A78',
+              borderRadius: 8,
+              marginRight: 8,
+            }}
+            textStyle={{ color: '#fff', fontSize: 14 }}
+          />
+          <AppButton
+            title="Cancel"
+            onPress={onClose}
+            disabled={loading}
+            style={{
+              paddingVertical: 6,
+              paddingHorizontal: 14,
+              backgroundColor: '#2C1A78',
+              borderRadius: 8,
+            }}
+            textStyle={{ color: '#fff', fontSize: 14 }}
+          />
         </View>
-        {loading && <ActivityIndicator style={{ marginTop: 12 }} />}
+        {loading && <ActivityIndicator style={{ marginTop: 12 }} color="#5A31F4" />}
       </View>
     </KeyboardAvoidingView>
   </Modal>
