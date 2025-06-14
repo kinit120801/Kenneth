@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
+  useColorScheme,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
@@ -26,6 +27,9 @@ const SignUpScreen = ({ navigation }: any) => {
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const colorScheme = useColorScheme();
+  const placeholderColor = colorScheme === 'dark' ? '#aaa' : '#555';
 
   const handleDateChange = (event: any, selectedDate?: Date) => {
     setShowDatePicker(false);
@@ -88,7 +92,6 @@ const SignUpScreen = ({ navigation }: any) => {
       <View style={[styles.spot, { top: 60, left: 30, backgroundColor: '#7f5af0', opacity: 0.18, width: 120, height: 120 }]} />
       <View style={[styles.spot, { bottom: 80, right: 40, backgroundColor: '#b983ff', opacity: 0.13, width: 90, height: 90 }]} />
       <View style={[styles.spot, { top: 200, right: 60, backgroundColor: '#fff', opacity: 0.07, width: 60, height: 60 }]} />
-      {/* Smaller Dots */}
       <View style={[styles.spot, { top: 120, left: 80, backgroundColor: '#b983ff', opacity: 0.22, width: 24, height: 24 }]} />
       <View style={[styles.spot, { bottom: 160, right: 100, backgroundColor: '#fff', opacity: 0.15, width: 16, height: 16 }]} />
       <View style={[styles.spot, { top: 300, left: 40, backgroundColor: '#7f5af0', opacity: 0.18, width: 18, height: 18 }]} />
@@ -97,9 +100,9 @@ const SignUpScreen = ({ navigation }: any) => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>Create Account</Text>
 
-        <TextInput placeholder="First Name" value={firstName} onChangeText={setFirstName} style={styles.input} />
-        <TextInput placeholder="Last Name" value={lastName} onChangeText={setLastName} style={styles.input} />
-        <TextInput placeholder="Username" value={username} onChangeText={setUsername} style={styles.input} />
+        <TextInput placeholder="First Name" placeholderTextColor={placeholderColor} value={firstName} onChangeText={setFirstName} style={styles.input} />
+        <TextInput placeholder="Last Name" placeholderTextColor={placeholderColor} value={lastName} onChangeText={setLastName} style={styles.input} />
+        <TextInput placeholder="Username" placeholderTextColor={placeholderColor} value={username} onChangeText={setUsername} style={styles.input} />
 
         <View style={styles.pickerContainer}>
           <Picker selectedValue={gender} onValueChange={(value) => setGender(value)} style={styles.picker}>
@@ -111,7 +114,13 @@ const SignUpScreen = ({ navigation }: any) => {
         </View>
 
         <TouchableOpacity onPress={() => setShowDatePicker(true)}>
-          <TextInput placeholder="Birthdate (YYYY-MM-DD)" value={birthdate} editable={false} style={styles.input} />
+          <TextInput
+            placeholder="Birthdate (YYYY-MM-DD)"
+            placeholderTextColor={placeholderColor}
+            value={birthdate}
+            editable={false}
+            style={styles.input}
+          />
         </TouchableOpacity>
 
         {showDatePicker && (
@@ -124,9 +133,30 @@ const SignUpScreen = ({ navigation }: any) => {
           />
         )}
 
-        <TextInput placeholder="Email" value={email} onChangeText={setEmail} style={styles.input} autoCapitalize="none" />
-        <TextInput placeholder="Password" value={password} onChangeText={setPassword} style={styles.input} secureTextEntry />
-        <TextInput placeholder="Confirm Password" value={passwordConfirmation} onChangeText={setPasswordConfirmation} style={styles.input} secureTextEntry />
+        <TextInput
+          placeholder="Email"
+          placeholderTextColor={placeholderColor}
+          value={email}
+          onChangeText={setEmail}
+          style={styles.input}
+          autoCapitalize="none"
+        />
+        <TextInput
+          placeholder="Password"
+          placeholderTextColor={placeholderColor}
+          value={password}
+          onChangeText={setPassword}
+          style={styles.input}
+          secureTextEntry
+        />
+        <TextInput
+          placeholder="Confirm Password"
+          placeholderTextColor={placeholderColor}
+          value={passwordConfirmation}
+          onChangeText={setPasswordConfirmation}
+          style={styles.input}
+          secureTextEntry
+        />
 
         <TouchableOpacity style={styles.button} onPress={handleSignUp} disabled={loading}>
           <Text style={[styles.buttonText, { color: '#2d014d' }]}>{loading ? 'Signing up...' : 'Sign Up'}</Text>
@@ -160,7 +190,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontFamily: Platform.OS === 'ios' ? 'Snell Roundhand' : 'cursive',
     textShadowColor: '#7f5af0',
-    textShadowOffset: { width: 2, height: 2 }, // increased shadow for more effect
+    textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 8,
   },
   input: {
@@ -169,8 +199,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 12,
     fontSize: 16,
-    borderWidth: 1.5, // add border
-    borderColor: '#7f5af0', // purple border
+    borderWidth: 1.5,
+    borderColor: '#7f5af0',
   },
   pickerContainer: {
     backgroundColor: '#fff',
@@ -210,21 +240,6 @@ const styles = StyleSheet.create({
   spot: {
     position: 'absolute',
     borderRadius: 100,
-  },
-  sparkle: {
-    position: 'absolute',
-    width: 14,
-    height: 14,
-    backgroundColor: 'transparent',
-    borderColor: '#b983ff',
-    borderWidth: 1.5,
-    borderRadius: 7,
-    opacity: 0.7,
-    shadowColor: '#b983ff',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 6,
-    zIndex: 1,
   },
 });
 

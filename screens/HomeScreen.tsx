@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { BackHandler } from 'react-native';
 import {
   FlatList,
   View,
@@ -9,7 +10,9 @@ import {
   Modal,
   Image,
   TextInput,
+  Dimensions,
 } from 'react-native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Feather';
 import PostItem from '../components/PostItem';
@@ -30,6 +33,8 @@ import { User, Post } from '../types';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../App';
+
+const { width, height } = Dimensions.get('window');
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -107,11 +112,7 @@ const HomeScreen: React.FC = () => {
   const handleLike = async (postId: number, liked: boolean) => {
     if (!userId) return;
     try {
-      if (liked) {
-        await unlikePost(postId);
-      } else {
-        await likePost(postId);
-      }
+      liked ? await unlikePost(postId) : await likePost(postId);
       fetchPostsHandler(true);
     } catch (error) {
       console.error('Failed to like/unlike post:', error);
@@ -164,19 +165,6 @@ const HomeScreen: React.FC = () => {
     }
   };
 
-  const handleSearch = async () => {
-    if (!searchQuery.trim()) return;
-    setSearching(true);
-    try {
-      const res = await searchUsers(searchQuery);
-      setSearchResults(res.data);
-    } catch {
-      Alert.alert('Error', 'Failed to search users');
-    } finally {
-      setSearching(false);
-    }
-  };
-
   const handleRefresh = async () => {
     setRefreshing(true);
     await fetchPostsHandler(true);
@@ -191,6 +179,10 @@ const HomeScreen: React.FC = () => {
     React.useCallback(() => {
       fetchUser();
       fetchPostsHandler(true);
+
+      const onBackPress = () => true;
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return () => backHandler.remove();
     }, [])
   );
 
@@ -211,36 +203,40 @@ const HomeScreen: React.FC = () => {
     } else {
       setSearchResults([]);
     }
-    return () => {
-      isActive = false;
-    };
+    return () => { isActive = false; };
   }, [searchQuery]);
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', padding: 20, alignItems: 'center', backgroundColor: '#2d014d' }}>
+    <View style={{ flex: 1, backgroundColor: '#2d014d', paddingHorizontal: 20, paddingTop: 50 }}>
+      {/* Decorative Background */}
+      <View style={{ position: 'absolute', top: -40, left: -30, width: 150, height: 150, backgroundColor: '#c084fc', borderRadius: 75, opacity: 0.07 }} />
+      <View style={{ position: 'absolute', bottom: 100, right: -40, width: 180, height: 180, backgroundColor: '#7c3aed', borderRadius: 90, opacity: 0.05 }} />
 
       {userId ? (
         <>
+          {/* ✅ Fixed Search Input */}
           <View style={{ flexDirection: 'row', marginBottom: 12 }}>
-  <TextInput
-    style={{
-      flex: 1,
-      backgroundColor: '#fff',
-      borderRadius: 25,
-      paddingHorizontal: 16,
-      paddingVertical: 8,
-      fontSize: 16,
-    }}
-    placeholder="Search"
-    value={searchQuery}
-    onChangeText={setSearchQuery}
-    returnKeyType="search"
-  />
-</View>
+            <TextInput
+              style={{
+                flex: 1,
+                backgroundColor: '#fff',
+                borderRadius: 25,
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                fontSize: 16,
+                color: '#000',
+              }}
+              placeholder="Search"
+              placeholderTextColor="#888"
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              returnKeyType="search"
+            />
+          </View>
 
-
+          {/* Header Row */}
           <View style={styles.headerRow}>
-            <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')} activeOpacity={0.7}>
+            <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
               <Image
                 source={
                   user?.profile_picture
@@ -250,33 +246,37 @@ const HomeScreen: React.FC = () => {
                 style={{ width: 40, height: 40, borderRadius: 20, marginRight: 10, backgroundColor: '#eee' }}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.mindInput, { flex: 1 }]} onPress={() => setShowPostModal(true)} activeOpacity={0.7}>
-              <Text>What's on your mind?</Text>
+
+            <TouchableOpacity style={[styles.mindInput, { flex: 1 }]} onPress={() => setShowPostModal(true)}>
+              <Text style={{ color: '#d8b4fe' }}>What's on your mind?</Text>
             </TouchableOpacity>
+
             <TouchableOpacity onPress={() => setShowMenu(true)} style={styles.burgerBtn}>
               <Icon name="menu" size={28} />
             </TouchableOpacity>
           </View>
 
+          {/* Menu Modal */}
           <Modal visible={showMenu} transparent animationType="fade" onRequestClose={() => setShowMenu(false)}>
             <TouchableOpacity style={styles.menuOverlay} onPress={() => setShowMenu(false)}>
               <View style={styles.menuModal}>
                 <TouchableOpacity onPress={() => { setShowMenu(false); navigation.navigate('ProfileScreen'); }} style={styles.menuItem}>
-                  <Icon name="user" size={20} />
-                  <Text style={{ marginLeft: 8 }}>Profile</Text>
+                  <Icon name="user" size={20} color="#d8b4fe" />
+                  <Text style={{ marginLeft: 8, color: '#d8b4fe' }}>Profile</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { setShowMenu(false); navigation.navigate('PersonalDetailsScreen'); }} style={styles.menuItem}>
-                  <Icon name="info" size={20} />
-                  <Text style={{ marginLeft: 8 }}>Personal Details</Text>
+                  <Icon name="info" size={20} color="#d8b4fe" />
+                  <Text style={{ marginLeft: 8, color: '#d8b4fe' }}>Personal Details</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => { setShowMenu(false); handleLogout(); }} style={styles.menuItem}>
-                  <Icon name="log-out" size={20} />
-                  <Text style={{ marginLeft: 8 }}>Logout</Text>
+                <TouchableOpacity onPress={handleLogout} style={styles.menuItem}>
+                  <Icon name="log-out" size={20} color="#d8b4fe" />
+                  <Text style={{ marginLeft: 8, color: '#d8b4fe' }}>Logout</Text>
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
           </Modal>
 
+          {/* Create Post Modal */}
           <CreatePostModal
             visible={showPostModal}
             value={newPost}
@@ -289,6 +289,7 @@ const HomeScreen: React.FC = () => {
             loading={loading}
           />
 
+          {/* Search Result OR Post Feed */}
           {searchQuery.trim() !== '' && !searching ? (
             searchResults.length > 0 ? (
               <FlatList
@@ -320,11 +321,10 @@ const HomeScreen: React.FC = () => {
                     </View>
                   </TouchableOpacity>
                 )}
-                style={{ marginBottom: 12 }}
               />
             ) : (
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>No User Found</Text>
+                <Text style={{ color: '#fff' }}>No User Found</Text>
               </View>
             )
           ) : (

@@ -38,7 +38,7 @@ const CreatePostModal: React.FC<Props> = ({
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       style={{
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        backgroundColor: 'rgba(0,0,0,0.7)',
         justifyContent: 'center',
         alignItems: 'center',
       }}
@@ -47,31 +47,43 @@ const CreatePostModal: React.FC<Props> = ({
         style={[
           sharedStyles.modalCard,
           {
-            backgroundColor: '#fff',
-            borderRadius: 12,
+            backgroundColor: '#1e1e2e',
+            borderRadius: 16,
             padding: 20,
             width: '90%',
+            shadowColor: '#000',
+            shadowOpacity: 0.3,
+            shadowOffset: { width: 0, height: 5 },
+            shadowRadius: 12,
+            elevation: 10,
           },
         ]}
       >
-        <Text style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 12, color: '#5A31F4' }}>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 12,
+            color: '#f5f5f7',
+          }}
+        >
           Create Post
         </Text>
         <TextInput
           style={{
             width: '100%',
-            minHeight: 80,
+            minHeight: 100,
             borderColor: '#5A31F4',
-            borderWidth: 1.2,
+            borderWidth: 1,
             borderRadius: 10,
-            padding: 10,
+            padding: 12,
             marginBottom: 16,
             textAlignVertical: 'top',
-            backgroundColor: '#F5F3FF',
-            color: '#2C1A78',
+            backgroundColor: '#2a2a40',
+            color: '#ffffff',
           }}
           placeholder="What's on your mind?"
-          placeholderTextColor="#8E79D8"
+          placeholderTextColor="#aaaacc"
           multiline
           value={value}
           onChangeText={onChangeText}
@@ -82,28 +94,28 @@ const CreatePostModal: React.FC<Props> = ({
             onPress={onSubmit}
             disabled={loading}
             style={{
-              paddingVertical: 6,
-              paddingHorizontal: 14,
-              backgroundColor: '#2C1A78',
-              borderRadius: 8,
+              paddingVertical: 8,
+              paddingHorizontal: 18,
+              backgroundColor: '#5A31F4',
+              borderRadius: 10,
               marginRight: 8,
             }}
-            textStyle={{ color: '#fff', fontSize: 14 }}
+            textStyle={{ color: '#ffffff', fontWeight: 'bold' }}
           />
           <AppButton
             title="Cancel"
             onPress={onClose}
             disabled={loading}
             style={{
-              paddingVertical: 6,
-              paddingHorizontal: 14,
-              backgroundColor: '#2C1A78',
-              borderRadius: 8,
+              paddingVertical: 8,
+              paddingHorizontal: 18,
+              backgroundColor: '#444458',
+              borderRadius: 10,
             }}
-            textStyle={{ color: '#fff', fontSize: 14 }}
+            textStyle={{ color: '#ffffff', fontWeight: 'bold' }}
           />
         </View>
-        {loading && <ActivityIndicator style={{ marginTop: 12 }} color="#5A31F4" />}
+        {loading && <ActivityIndicator style={{ marginTop: 16 }} color="#5A31F4" />}
       </View>
     </KeyboardAvoidingView>
   </Modal>

@@ -112,50 +112,52 @@ const PostItem: React.FC<PostItemProps> = ({
 
 const styles = StyleSheet.create({
   card: {
-    borderWidth: 2,
-    borderColor: '#D1C4E9', // light purple border
-    borderRadius: 10,
-    marginBottom: 40,
-    padding:30,
-    backgroundColor: '#F3E5F5', // soft purple background
-    shadowColor: '#6A1B9A',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    borderWidth: 1,
+    borderColor: '#2c2c3e',
+    borderRadius: 14,
+    marginBottom: 32,
+    padding: 20,
+    backgroundColor: '#1e1e2e',
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
     shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+    elevation: 4,
   },
   avatar: {
     width: 38,
     height: 38,
     borderRadius: 19,
     marginRight: 10,
-    backgroundColor: '#E1BEE7',
+    backgroundColor: '#333',
   },
   username: {
     fontWeight: 'bold',
-    color: '#4A148C', // darker purple for username
+    color: '#a78bfa',
+    fontSize: 16,
   },
   contentText: {
-    color: '#4A148C',
-    fontSize: 16,
-    marginVertical: 4,
+    color: '#e2e2e2',
+    fontSize: 15,
+    marginVertical: 6,
+    lineHeight: 20,
   },
   actionsRow: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: 12,
     borderTopWidth: 1,
-    borderColor: '#CE93D8',
+    borderColor: '#3c3c50',
     paddingTop: 10,
   },
   actionButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 32,
+    marginRight: 28,
   },
   actionText: {
-    color: '#777',
+    color: '#aaa',
     marginLeft: 6,
+    fontSize: 14,
   },
 });
-
 export default PostItem;

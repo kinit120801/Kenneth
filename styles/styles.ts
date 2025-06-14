@@ -27,7 +27,7 @@ const profileStyles = StyleSheet.create({
     height: 120,
     borderRadius: 60,
     borderWidth: 3,
-    borderColor: '#f3f0ff',
+    borderColor: 'rgba(45, 1, 77, 1)',
     backgroundColor: '#d9ceff',
     ...sharedShadow,
   },
@@ -45,7 +45,7 @@ const profileStyles = StyleSheet.create({
   name: {
     fontWeight: '700',
     fontSize: 26,
-    color: '#2C1361',
+    color: '#d6b4fc',
     marginTop: 18,
     letterSpacing: 0.8,
   },
@@ -58,11 +58,14 @@ const profileStyles = StyleSheet.create({
   postsContainer: {
     flex: 1,
     width: '100%',
-    marginTop: 26,
-    backgroundColor: '#f3f0ff',
+    marginTop: 20,
+
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
     paddingTop: 24,
+    padding: 16,
+    backgroundColor: 'rgba(45, 1, 77, 1)',
+ 
     ...Platform.select({
       ios: {
         shadowColor: '#5A31F4',
@@ -80,7 +83,7 @@ const profileStyles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 16,
     marginLeft: 20,
-    color: '#2C1361',
+    color: '#d6b4fc', 
     letterSpacing: 0.5,
   },
   postCard: {
@@ -95,8 +98,8 @@ const profileStyles = StyleSheet.create({
   mindInput: {
     borderWidth: 1,
     borderColor: '#b3a9e0',
-    borderRadius: 70,
-    padding: 8,
+    borderRadius: 50,
+    padding: 10,
     marginVertical: 0,
     fontSize: 10,
     backgroundColor: '#f3f0ff',
@@ -118,29 +121,34 @@ const profileStyles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(44,19,97,0.08)',
+    backgroundColor: 'rgba(252, 249, 249, 0.08)',
     zIndex: 100,
   },
   menuModal: {
     position: 'absolute',
-    top: 55,
+    top: 150,
     right: 16,
-    backgroundColor: '#d9ceff',
+    backgroundColor: 'rgba(45, 1, 77, 1)',
     borderRadius: 18,
-    paddingVertical: 16,
-    paddingHorizontal: 22,
-    minWidth: 180,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    minWidth: 18,
     ...sharedShadow,
   },
   menuItem: {
-    paddingVertical: 10,
+    paddingVertical: 11,
     paddingHorizontal: 14,
     borderBottomWidth: 1,
     borderBottomColor: '#b3a9e0',
     backgroundColor: 'transparent',
   },
+  menuItemText: {
+  marginLeft: 8,
+  color: '#d8b4fe', // light purple
+},
+
   burgerBtn: {
-    padding: 5,
+    padding: 4,
     borderRadius: 20,
     backgroundColor: '#b3a9e0',
     justifyContent: 'center',

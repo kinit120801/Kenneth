@@ -56,7 +56,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: '#7f5af0',
     borderRadius: 8,
-    marginBottom: 16,
+    marginBottom: 11,
     backgroundColor: '#242629',
   },
   picker: {

@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import {
+  Modal,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import { Comment, Post } from '../types';
 
 type CommentsModalProps = {
@@ -12,7 +19,14 @@ type CommentsModalProps = {
   onRefresh?: () => Promise<void>;
 };
 
-const CommentsModal: React.FC<CommentsModalProps> = ({ visible, onClose, post, userId, onComment, onEditComment }) => {
+const CommentsModal: React.FC<CommentsModalProps> = ({
+  visible,
+  onClose,
+  post,
+  userId,
+  onComment,
+  onEditComment,
+}) => {
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState<Comment[]>(post.comments);
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
@@ -48,26 +62,24 @@ const CommentsModal: React.FC<CommentsModalProps> = ({ visible, onClose, post, u
       <View
         style={{
           flex: 1,
-          backgroundColor: 'rgba(0,0,0,0.15)',
+          backgroundColor: 'rgba(0,0,0,0.7)',
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
-        <View style={{
-          backgroundColor: '#fff',
-          borderRadius: 10,
-          padding: 16,
-          width: '90%',
-          maxHeight: '80%',
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.25,
-          shadowRadius: 4,
-          elevation: 5,
-        }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 14, color: '#222' }}>
+        <View
+          style={{
+            backgroundColor: '#1e1e2e',
+            borderRadius: 16,
+            padding: 20,
+            width: '90%',
+            maxHeight: '80%',
+          }}
+        >
+          <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 14, color: '#f5f5f7' }}>
             Comments
           </Text>
+
           <FlatList
             data={comments}
             keyExtractor={(item) => item.id.toString()}
@@ -75,9 +87,9 @@ const CommentsModal: React.FC<CommentsModalProps> = ({ visible, onClose, post, u
               <View
                 style={{
                   marginBottom: 14,
-                  backgroundColor: '#f0f4f8',
+                  backgroundColor: '#2a2a40',
                   borderRadius: 10,
-                  padding: 10,
+                  padding: 12,
                 }}
               >
                 {editingCommentId === item.id ? (
@@ -87,24 +99,22 @@ const CommentsModal: React.FC<CommentsModalProps> = ({ visible, onClose, post, u
                       onChangeText={setEditContent}
                       style={{
                         borderWidth: 1,
-                        borderColor: '#d0d7de',
+                        borderColor: '#444',
                         borderRadius: 8,
                         padding: 10,
-                        backgroundColor: '#fff',
+                        backgroundColor: '#333',
                         marginBottom: 8,
                         fontSize: 15,
+                        color: '#fff',
                       }}
                       placeholderTextColor="#aaa"
                     />
                     <TouchableOpacity
-                      onPress={async () => {
-                        await handleEditComment(item.id, editContent);
-                        // Do NOT call setEditingCommentId(null) here, it's already handled in handleEditComment
-                      }}
+                      onPress={async () => await handleEditComment(item.id, editContent)}
                       style={{
-                        backgroundColor: '#1976d2',
-                        paddingVertical: 10,
-                        paddingHorizontal: 18,
+                        backgroundColor: '#5A31F4',
+                        paddingVertical: 8,
+                        paddingHorizontal: 16,
                         borderRadius: 8,
                         marginBottom: 4,
                       }}
@@ -115,15 +125,15 @@ const CommentsModal: React.FC<CommentsModalProps> = ({ visible, onClose, post, u
                       onPress={() => setEditingCommentId(null)}
                       style={{ marginBottom: 4 }}
                     >
-                      <Text style={{ color: '#888', fontSize: 15 }}>Cancel</Text>
+                      <Text style={{ color: '#bbb', fontSize: 15 }}>Cancel</Text>
                     </TouchableOpacity>
                   </>
                 ) : (
                   <>
-                    <Text style={{ fontWeight: 'bold', color: '#1976d2' }}>
+                    <Text style={{ fontWeight: 'bold', color: '#a78bfa' }}>
                       {item.user?.username ?? 'User'}:
                     </Text>
-                    <Text style={{ color: '#222', marginBottom: 4 }}>{item.content}</Text>
+                    <Text style={{ color: '#e2e2e2', marginBottom: 4 }}>{item.content}</Text>
                     {item.user && String(item.user.id) === String(userId) && (
                       <TouchableOpacity
                         onPress={() => {
@@ -132,7 +142,7 @@ const CommentsModal: React.FC<CommentsModalProps> = ({ visible, onClose, post, u
                         }}
                         style={{ marginTop: 4 }}
                       >
-                        <Text style={{ color: '#1976d2', fontWeight: '500' }}>Edit</Text>
+                        <Text style={{ color: '#7dd3fc', fontWeight: '500' }}>Edit</Text>
                       </TouchableOpacity>
                     )}
                   </>
@@ -144,10 +154,10 @@ const CommentsModal: React.FC<CommentsModalProps> = ({ visible, onClose, post, u
                 No comments yet.
               </Text>
             }
-            style={{ marginBottom: 12 }}
-            contentContainerStyle={{ flexGrow: 1 }}
+            contentContainerStyle={{ paddingBottom: 12 }}
           />
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
+
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
             <TextInput
               placeholder="Add a comment..."
               value={comment}
@@ -155,19 +165,20 @@ const CommentsModal: React.FC<CommentsModalProps> = ({ visible, onClose, post, u
               style={{
                 flex: 1,
                 borderWidth: 1,
-                borderColor: '#d0d7de',
+                borderColor: '#444',
                 borderRadius: 8,
                 padding: 10,
-                backgroundColor: '#fff',
+                backgroundColor: '#2a2a40',
                 marginRight: 8,
                 fontSize: 15,
+                color: '#fff',
               }}
               placeholderTextColor="#aaa"
             />
             <TouchableOpacity
               onPress={handleAddComment}
               style={{
-                backgroundColor: '#1976d2',
+                backgroundColor: '#5A31F4',
                 paddingVertical: 10,
                 paddingHorizontal: 18,
                 borderRadius: 8,
@@ -176,11 +187,12 @@ const CommentsModal: React.FC<CommentsModalProps> = ({ visible, onClose, post, u
               <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 15 }}>Post</Text>
             </TouchableOpacity>
           </View>
+
           <TouchableOpacity
             onPress={onClose}
             style={{ marginTop: 16, alignSelf: 'flex-end', padding: 6 }}
           >
-            <Text style={{ color: '#888', fontSize: 15 }}>Close</Text>
+            <Text style={{ color: '#bbb', fontSize: 15 }}>Close</Text>
           </TouchableOpacity>
         </View>
       </View>

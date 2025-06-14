@@ -87,7 +87,7 @@ const LoginScreen = ({ navigation }: any) => {
         disabled={loading}
         activeOpacity={0.8}
       >
-        <Text style={styles.buttonText}>{loading ? 'Logging in...' : 'Login'}</Text>
+        <Text style={styles.buttonText}>{loading ? 'Loading...' : 'Login'}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('Signup')} style={{ marginTop: 20 }}>
