@@ -1,18 +1,18 @@
 // screens/LoginScreen.tsx
-import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
   Alert,
   Platform,
   StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import { useUser } from '../contexts/UserContext';
 import { API_URL } from '../api/postApi';
+import { useUser } from '../contexts/UserContext';
 
 const LoginScreen = ({ navigation }: any) => {
   const { setUser } = useUser();
@@ -53,14 +53,14 @@ const LoginScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       {/* Decorative Background */}
-      <View style={[styles.spot, { top: 40, left: 30, backgroundColor: '#7f5af0', opacity: 0.18, width: 100, height: 100 }]} />
-      <View style={[styles.spot, { bottom: 60, right: 40, backgroundColor: '#b983ff', opacity: 0.13, width: 90, height: 90 }]} />
+      <View style={[styles.spot, { top: 40, left: 30, backgroundColor: '#orange', opacity: 0.18, width: 100, height: 100 }]} />
+      <View style={[styles.spot, { bottom: 60, right: 40, backgroundColor: '#orange', opacity: 0.13, width: 90, height: 90 }]} />
       <View style={[styles.spot, { top: 180, right: 50, backgroundColor: '#fff', opacity: 0.07, width: 60, height: 60 }]} />
       <View style={[styles.sparkle, { top: 100, left: 200 }]} />
       <View style={[styles.sparkle, { top: 250, right: 80 }]} />
       <View style={[styles.sparkle, { bottom: 120, left: 80 }]} />
 
-      <Text style={styles.title}>Login to RaeBook</Text>
+      <Text style={styles.title}>Login to Kinet</Text>
 
       <TextInput
         placeholder="Email"
@@ -106,46 +106,46 @@ const LoginScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2d014d',
+    backgroundColor: '#orange',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   title: {
     fontSize: 36,
-    color: '#b983ff',
+    color: '#orange',
     marginBottom: 30,
     fontWeight: 'bold',
     fontStyle: 'italic',
     fontFamily: Platform.OS === 'ios' ? 'Snell Roundhand' : 'cursive',
-    textShadowColor: '#7f5af0',
+    textShadowColor: '#orange',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 8,
   },
   input: {
     width: '100%',
     borderWidth: 1,
-    borderColor: '#7f5af0',
+    borderColor: '#orange',
     backgroundColor: '#fff',
     color: '#000',
     borderRadius: 10,
     padding: 14,
     marginBottom: 12,
-    shadowColor: '#7f5af0',
+    shadowColor: '#orange',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 5,
   },
   button: {
-    backgroundColor: '#7f5af0',
+    backgroundColor: '#orange',
     paddingVertical: 14,
     paddingHorizontal: 48,
     borderRadius: 20,
     alignItems: 'center',
     marginBottom: 10,
     marginTop: 10,
-    shadowColor: '#7f5af0',
+    shadowColor: '#orange',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.4,
     shadowRadius: 18,
@@ -158,11 +158,11 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   signupText: {
-    color: '#b983ff',
+    color: '#orange',
   },
   forgot: {
     marginTop: 16,
-    color: '#b983ff', // changed to light purple
+    color: '#orange', // changed to light purple
     textAlign: 'center',
     textDecorationLine: 'underline',
   },
@@ -175,11 +175,11 @@ const styles = StyleSheet.create({
     width: 14,
     height: 14,
     backgroundColor: 'transparent',
-    borderColor: '#b983ff',
+    borderColor: '#orange',
     borderWidth: 1.5,
     borderRadius: 7,
     opacity: 0.7,
-    shadowColor: '#b983ff',
+    shadowColor: '#orange',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 6,

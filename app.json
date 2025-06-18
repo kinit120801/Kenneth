@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RaeBook",
-    "slug": "raebook",
+    "name": "kinet",
+    "slug": "kinet",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.kourie.raebook",
+      "bundleIdentifier": "com.kinet.kinet",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -25,14 +25,14 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.kourie.raebook"
+      "package": "com.kinet.kinet"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "a8e89347-b6f9-4141-a721-a33e7f89dfbd"
+        "projectId": "56f63c1a-5089-4726-af82-a1ca9282cef3"
       }
     }
   }

@@ -1,16 +1,15 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { UserProvider } from './contexts/UserContext';
 
-import LoginScreen from './screens/LoginScreen';
-import SignupScreen from './screens/SignUpScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
 import HomeScreen from './screens/HomeScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
-import ProfileScreen from './screens/ProfileScreen';
+import LoginScreen from './screens/LoginScreen';
 import PersonalDetailsScreen from './screens/PersonalDetailsScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import SignupScreen from './screens/SignUpScreen';
 import UserProfileScreen from './screens/UserProfileScreen';
+import WelcomeScreen from './screens/WelcomeScreen';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -35,7 +34,7 @@ export default function App() {
             headerShown: true,
             headerTitleAlign: 'center',
             headerStyle: {
-              backgroundColor: '#7f5af0',
+              backgroundColor: '#orange',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {

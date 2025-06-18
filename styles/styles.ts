@@ -1,11 +1,11 @@
-import { StyleSheet, Dimensions, Platform } from 'react-native';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
 const sharedShadow = {
   ...Platform.select({
     ios: {
-      shadowColor: '#2C1361',
+      shadowColor: 'Orangered',
       shadowOffset: { width: 0, height: 4 },
       shadowOpacity: 0.12,
       shadowRadius: 10,
@@ -27,7 +27,7 @@ const profileStyles = StyleSheet.create({
     height: 120,
     borderRadius: 60,
     borderWidth: 3,
-    borderColor: 'rgba(45, 1, 77, 1)',
+    borderColor: 'rgb(248, 161, 61)',
     backgroundColor: '#d9ceff',
     ...sharedShadow,
   },
@@ -35,7 +35,7 @@ const profileStyles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: '#5A31F4',
+    backgroundColor: '#black',
     borderRadius: 16,
     padding: 6,
     borderWidth: 2,
@@ -64,11 +64,11 @@ const profileStyles = StyleSheet.create({
     borderTopRightRadius: 28,
     paddingTop: 24,
     padding: 16,
-    backgroundColor: 'rgba(45, 1, 77, 1)',
+    backgroundColor: 'rgb(255, 179, 37)',
  
     ...Platform.select({
       ios: {
-        shadowColor: '#5A31F4',
+        shadowColor: '#orange',
         shadowOffset: { width: 0, height: -3 },
         shadowOpacity: 0.05,
         shadowRadius: 8,
@@ -103,14 +103,14 @@ const profileStyles = StyleSheet.create({
     marginVertical: 0,
     fontSize: 10,
     backgroundColor: '#f3f0ff',
-    color: '#2C1361',
+    color: '#orange',
   },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 16,
-    backgroundColor: '#9370db',
+    backgroundColor: '#orange',
     padding: 5,
     borderRadius: 14,
     ...sharedShadow,
@@ -128,7 +128,7 @@ const profileStyles = StyleSheet.create({
     position: 'absolute',
     top: 150,
     right: 16,
-    backgroundColor: 'rgba(45, 1, 77, 1)',
+    backgroundColor: 'rgb(255, 179, 37)',
     borderRadius: 18,
     paddingVertical: 10,
     paddingHorizontal: 15,

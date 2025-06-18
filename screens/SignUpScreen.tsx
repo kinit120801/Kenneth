@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  Alert,
-  Platform,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  ScrollView,
-  StyleSheet,
-  useColorScheme,
-} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
+import { useState } from 'react';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+} from 'react-native';
 import { API_URL } from '../api/postApi';
 
 const SignUpScreen = ({ navigation }: any) => {
@@ -159,7 +159,7 @@ const SignUpScreen = ({ navigation }: any) => {
         />
 
         <TouchableOpacity style={styles.button} onPress={handleSignUp} disabled={loading}>
-          <Text style={[styles.buttonText, { color: '#2d014d' }]}>{loading ? 'Signing up...' : 'Sign Up'}</Text>
+          <Text style={[styles.buttonText, { color: '#orange' }]}>{loading ? 'Signing up...' : 'Sign Up'}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.replace('Login')} style={{ marginTop: 16 }}>
@@ -175,7 +175,7 @@ const SignUpScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2d014d',
+    backgroundColor: '#orange',
   },
   scrollContainer: {
     padding: 24,
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     fontStyle: 'italic',
     fontFamily: Platform.OS === 'ios' ? 'Snell Roundhand' : 'cursive',
-    textShadowColor: '#7f5af0',
+    textShadowColor: '#orange',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 8,
   },
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     fontSize: 16,
     borderWidth: 1.5,
-    borderColor: '#7f5af0',
+    borderColor: '#orange',
   },
   pickerContainer: {
     backgroundColor: '#fff',
@@ -213,12 +213,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   button: {
-    backgroundColor: '#7f5af0',
+    backgroundColor: '#orange',
     paddingVertical: 14,
     borderRadius: 20,
     alignItems: 'center',
     marginTop: 10,
-    shadowColor: '#7f5af0',
+    shadowColor: '#orange',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.4,
     shadowRadius: 18,
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   linkText: {
-    color: '#b983ff',
+    color: '#orange',
     textAlign: 'center',
   },
   link: {

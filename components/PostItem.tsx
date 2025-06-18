@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-import CommentsModal from './CommentsModal';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
+import React, { useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 import type { RootStackParamList } from '../App';
-import { API_URL } from '../api/postApi';
+import CommentsModal from './CommentsModal';
 
 type User = {
   id: number;
@@ -82,8 +81,8 @@ const PostItem: React.FC<PostItemProps> = ({
           style={styles.actionButton}
           onPress={() => onLike(post.id, likedByUser)}
         >
-          <Icon name="thumbs-up" size={22} color={likedByUser ? '#6A1B9A' : '#bbb'} />
-          <Text style={[styles.actionText, likedByUser && { color: '#6A1B9A' }]}>
+          <Icon name="thumbs-up" size={22} color={likedByUser ? '#orange' : '#bbb'} />
+          <Text style={[styles.actionText, likedByUser && { color: '#orange' }]}>
             Like{post.likes && post.likes.length > 0 ? ` (${post.likes.length})` : ''}
           </Text>
         </TouchableOpacity>
@@ -133,7 +132,7 @@ const styles = StyleSheet.create({
   },
   username: {
     fontWeight: 'bold',
-    color: '#a78bfa',
+    color: '#orange',
     fontSize: 16,
   },
   contentText: {

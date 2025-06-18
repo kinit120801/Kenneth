@@ -1,8 +1,8 @@
-import { StyleSheet, Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   button: {
-    backgroundColor: '#7f5af0',
+    backgroundColor: '#orange',
     paddingVertical: 16,
     paddingHorizontal: 48,
     borderRadius: 20,
@@ -10,7 +10,7 @@ export default StyleSheet.create({
     marginBottom: 20,
     ...Platform.select({
       ios: {
-        shadowColor: '#7f5af0',
+        shadowColor: '#orange',
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.4,
         shadowRadius: 18,
@@ -32,7 +32,7 @@ export default StyleSheet.create({
   input: {
     width: '100%',
     height: 50,
-    borderColor: '#7f5af0',
+    borderColor: '#orange',
     borderWidth: 1.5,
     borderRadius: 16,
     paddingHorizontal: 16,
@@ -42,7 +42,7 @@ export default StyleSheet.create({
     color: '#fffffe',
     ...Platform.select({
       ios: {
-        shadowColor: '#7f5af0',
+        shadowColor: '#orange',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.15,
         shadowRadius: 10,
@@ -54,7 +54,7 @@ export default StyleSheet.create({
   },
   pickerContainer: {
     borderWidth: 1,
-    borderColor: '#7f5af0',
+    borderColor: '#orange',
     borderRadius: 8,
     marginBottom: 11,
     backgroundColor: '#242629',
@@ -81,7 +81,7 @@ export default StyleSheet.create({
     maxHeight: '82%',
     alignSelf: 'center',
     borderWidth: 1,
-    borderColor: '#7f5af0',
+    borderColor: '#orange',
     ...Platform.select({
       ios: {
         shadowColor: '#f25f4c',

@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
 import {
-  View,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
   Text,
   TextInput,
-  Alert,
   TouchableOpacity,
-  StyleSheet,
-  Platform,
-  KeyboardAvoidingView,
+  View,
 } from 'react-native';
-import axios from 'axios';
 import { API_URL } from '../api/postApi';
 
 const ForgotPasswordScreen = ({ navigation }: any) => {
@@ -45,13 +45,13 @@ const ForgotPasswordScreen = ({ navigation }: any) => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       {/* Decorative Spots */}
-      <View style={[styles.spot, { top: 60, left: 30, backgroundColor: '#7f5af0', opacity: 0.18, width: 120, height: 120 }]} />
-      <View style={[styles.spot, { bottom: 80, right: 40, backgroundColor: '#b983ff', opacity: 0.13, width: 90, height: 90 }]} />
+      <View style={[styles.spot, { top: 60, left: 30, backgroundColor: '#orange', opacity: 0.18, width: 120, height: 120 }]} />
+      <View style={[styles.spot, { bottom: 80, right: 40, backgroundColor: '#orange', opacity: 0.13, width: 90, height: 90 }]} />
       <View style={[styles.spot, { top: 200, right: 60, backgroundColor: '#fff', opacity: 0.07, width: 60, height: 60 }]} />
       {/* Smaller Dots */}
       <View style={[styles.spot, { top: 120, left: 80, backgroundColor: '#b983ff', opacity: 0.22, width: 24, height: 24 }]} />
       <View style={[styles.spot, { bottom: 160, right: 100, backgroundColor: '#fff', opacity: 0.15, width: 16, height: 16 }]} />
-      <View style={[styles.spot, { top: 300, left: 40, backgroundColor: '#7f5af0', opacity: 0.18, width: 18, height: 18 }]} />
+      <View style={[styles.spot, { top: 300, left: 40, backgroundColor: '#orange', opacity: 0.18, width: 18, height: 18 }]} />
       <View style={[styles.spot, { bottom: 200, left: 60, backgroundColor: '#b983ff', opacity: 0.18, width: 12, height: 12 }]} />
       {/* Sparkles */}
       <View style={[styles.sparkle, { top: 100, left: 180 }]} />
@@ -73,7 +73,7 @@ const ForgotPasswordScreen = ({ navigation }: any) => {
         />
 
         <TouchableOpacity style={styles.button} onPress={handleReset} disabled={loading}>
-          <Text style={[styles.buttonText, { color: '#2d014d' }]}>{loading ? 'Sending...' : 'Send Reset Link'}</Text>
+          <Text style={[styles.buttonText, { color: '#orange' }]}>{loading ? 'Sending...' : 'Send Reset Link'}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginTop: 16 }}>

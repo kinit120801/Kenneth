@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { RouteProp } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
   Alert,
-  ScrollView,
-  TouchableOpacity,
+  Dimensions,
   KeyboardAvoidingView,
   Platform,
-  Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { RouteProp } from '@react-navigation/native';
-import type { RootStackParamList } from '../App';
 import Icon from 'react-native-vector-icons/Feather';
 import { API_URL } from '../api/postApi';
+import type { RootStackParamList } from '../App';
 
 type PersonalDetailsScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'PersonalDetailsScreen'>;
@@ -98,8 +98,8 @@ const PersonalDetailsScreen: React.FC<PersonalDetailsScreenProps> = ({ navigatio
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 24}
     >
       {/* Background Decorations */}
-      <View style={[styles.spot, { top: 40, left: 30, backgroundColor: '#7f5af0', opacity: 0.18, width: 100, height: 100 }]} />
-      <View style={[styles.spot, { bottom: 60, right: 40, backgroundColor: '#b983ff', opacity: 0.13, width: 90, height: 90 }]} />
+      <View style={[styles.spot, { top: 40, left: 30, backgroundColor: '#orange', opacity: 0.18, width: 100, height: 100 }]} />
+      <View style={[styles.spot, { bottom: 60, right: 40, backgroundColor: '#orange', opacity: 0.13, width: 90, height: 90 }]} />
       <View style={[styles.spot, { top: 180, right: 50, backgroundColor: '#fff', opacity: 0.07, width: 60, height: 60 }]} />
       <View style={[styles.sparkle, { top: 100, left: 200 }]} />
       <View style={[styles.sparkle, { top: 250, right: 80 }]} />
@@ -243,17 +243,17 @@ const PersonalDetailsScreen: React.FC<PersonalDetailsScreenProps> = ({ navigatio
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2d014d',
+    backgroundColor: '#orange',
   },
   header: {
     fontSize: 32,
     fontWeight: 'bold',
     fontStyle: 'italic',
-    color: '#b983ff',
+    color: '#orange',
     marginBottom: 30,
     alignSelf: 'center',
     fontFamily: Platform.OS === 'ios' ? 'Snell Roundhand' : 'cursive',
-    textShadowColor: '#7f5af0',
+    textShadowColor: '#orange',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 8,
   },
@@ -268,13 +268,13 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#b983ff',
+    borderColor: '#orange',
     borderRadius: 10,
     padding: 12,
     paddingRight: 36,
     backgroundColor: '#fff',
     color: '#000',
-    shadowColor: '#b983ff',
+    shadowColor: '#orange',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 10,
     top: 14,
-    color: '#b983ff',
+    color: '#orange',
   },
   spot: {
     position: 'absolute',
@@ -296,11 +296,11 @@ const styles = StyleSheet.create({
   width: 14,
   height: 14,
   backgroundColor: 'transparent',
-  borderColor: '#b983ff',
+  borderColor: '#orange',
   borderWidth: 1.5,
   borderRadius: 7,
   opacity: 0.7,
-  shadowColor: '#b983ff',
+  shadowColor: '#orange',
   shadowOffset: { width: 0, height: 0 },
   shadowOpacity: 0.8,
   shadowRadius: 6,
@@ -308,12 +308,12 @@ const styles = StyleSheet.create({
 },
 
   button: {
-    backgroundColor: '#b983ff',
+    backgroundColor: '#orange',
     paddingVertical: 14,
     paddingHorizontal: 30,
     borderRadius: 10,
     alignItems: 'center',
-    shadowColor: '#7f5af0',
+    shadowColor: '#orange',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 4,

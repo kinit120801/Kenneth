@@ -1,38 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { BackHandler } from 'react-native';
 import {
-  FlatList,
-  View,
-  Text,
-  TouchableOpacity,
   ActivityIndicator,
-  Alert,
-  Modal,
-  Image,
-  TextInput,
-  Dimensions,
+  Alert, BackHandler, Dimensions, FlatList, Image, Modal, Text, TextInput, TouchableOpacity, View
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Feather';
-import PostItem from '../components/PostItem';
-import CommentsModal from '../components/CommentsModal';
-import CreatePostModal from '../components/CreatePostModal';
-import styles from '../styles/styles';
 import {
-  fetchPosts,
+  addComment,
+  API_URL,
   createPost,
+  fetchPosts,
   likePost,
   unlikePost,
-  addComment,
   updateComment,
-  API_URL,
 } from '../api/postApi';
 import { searchUsers } from '../api/userApi';
-import { User, Post } from '../types';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../App';
+import CreatePostModal from '../components/CreatePostModal';
+import PostItem from '../components/PostItem';
+import styles from '../styles/styles';
+import { Post, User } from '../types';
 
 const { width, height } = Dimensions.get('window');
 
@@ -207,10 +197,10 @@ const HomeScreen: React.FC = () => {
   }, [searchQuery]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#2d014d', paddingHorizontal: 20, paddingTop: 50 }}>
+    <View style={{ flex: 1, backgroundColor: '#orange', paddingHorizontal: 20, paddingTop: 50 }}>
       {/* Decorative Background */}
-      <View style={{ position: 'absolute', top: -40, left: -30, width: 150, height: 150, backgroundColor: '#c084fc', borderRadius: 75, opacity: 0.07 }} />
-      <View style={{ position: 'absolute', bottom: 100, right: -40, width: 180, height: 180, backgroundColor: '#7c3aed', borderRadius: 90, opacity: 0.05 }} />
+      <View style={{ position: 'absolute', top: -40, left: -30, width: 150, height: 150, backgroundColor: '#orange', borderRadius: 75, opacity: 0.07 }} />
+      <View style={{ position: 'absolute', bottom: 100, right: -40, width: 180, height: 180, backgroundColor: '#orange', borderRadius: 90, opacity: 0.05 }} />
 
       {userId ? (
         <>
